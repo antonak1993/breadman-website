@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Breadman the Project</title>
+  <!-- Font Awesome για εικονίδια -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #fff;
+      color: #222;
+      text-align: center;
+    }
+
+    /* Header */
+    header {
+      background: #fff;
+      padding: 20px;
+      border-bottom: 2px solid #000;
+    }
+    header img {
+      max-height: 100px;
+    }
+
+    /* Navigation */
+    nav {
+      background: #000;
+      padding: 15px;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #f4f4f4;
+      text-decoration: underline;
+    }
+
+    /* Sections */
+    section {
+      padding: 40px 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    h2 {
+      margin-bottom: 20px;
+      color: #000;
+    }
+
+    /* Footer */
+    footer {
+      background: #000;
+      color: #fff;
+      padding: 20px;
+      margin-top: 40px;
+    }
+
+    /* Social Links */
+    .social-links a {
+      margin: 0 15px;
+      color: #000;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.3s ease;
+    }
+    .social-links a:hover {
+      color: #555;
+    }
+
+    /* Buttons with animation */
+    .button-link {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #000;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      margin: 10px;
+      transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .button-link:hover {
+      background: #444;
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Email Link */
+    .email-link {
+      color: #000;
+      font-weight: bold;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .email-link:hover {
+      color: #daa520; /* Χρυσό */
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Logo -->
+  <header>
+    <img src="logo.png" alt="Breadman the Project Logo">
+  </header>
+
+  <!-- Navigation Menu -->
+  <nav>
+    <a href="#menu">Menu</a>
+    <a href="#review">Write a Review</a>
+    <a href="#social">Follow us</a>
+  </nav>
+
+  <!-- Menu Section -->
+  <section id="menu">
+    <h2>Menu</h2>
+    <div>
+      <a class="button-link" href="menu-en.pdf" target="_blank">📄 Menu (English)</a>
+      <a class="button-link" href="menu-el.pdf" target="_blank">📄 Μενού (Ελληνικά)</a>
+    </div>
+  </section>
+
+  <!-- Review Section -->
+  <section id="review">
+    <h2>Write a Review</h2>
+    <p>We would love to hear from you!</p>
+    <a class="button-link" href="https://g.page/r/CQvg4gcO9xZ4EBM/review" target="_blank">⭐ Leave a Review</a>
+    <p>Email: <a class="email-link" href="mailto:breadman.dgi@gmail.com">breadman.dgi@gmail.com</a></p>
+  </section>
+
+  <!-- Social Media Section -->
+  <section id="social">
+    <h2>Follow us on Social Media</h2>
+    <div class="social-links">
+      <a href="https://www.instagram.com/breadman.theproject?igsh=N3Q2cnhiMWthM2hz&utm_source=qr" target="_blank">
+        <i class="fab fa-instagram"></i> Instagram
+      </a>
+      <a href="https://www.tiktok.com/@breadman.project?_t=ZN-8zFvgeg9D6M&_r=1" target="_blank">
+        <i class="fab fa-tiktok"></i> TikTok
+      </a>
+      <a href="https://www.facebook.com/share/1CgeZV9184/?mibextid=wwXIfr" target="_blank">
+        <i class="fab fa-facebook"></i> Facebook
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Breadman the Project. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
