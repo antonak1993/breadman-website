@@ -17,7 +17,7 @@
     overflow-x: hidden;
   }
 
-  /* Background με αραιότερες γραμμές και animation */
+  /* Layered background με animation */
   body::before {
     content: '';
     position: fixed;
@@ -27,10 +27,15 @@
     height: 300%;
     background:
       repeating-radial-gradient(circle at center,
-        rgba(0,0,0,0.12) 0,
-        rgba(0,0,0,0.12) 1px,
+        rgba(0,0,0,0.1) 0,
+        rgba(0,0,0,0.1) 1px,
         transparent 2px,
-        transparent 50px); /* λιγότερο πυκνές γραμμές */
+        transparent 50px),
+      repeating-radial-gradient(circle at 50% 50%,
+        rgba(0,0,0,0.06) 0,
+        rgba(0,0,0,0.06) 1px,
+        transparent 2px,
+        transparent 100px);
     animation: moveBackground 30s linear infinite;
     z-index: -1;
     opacity: 0.28;
@@ -53,12 +58,12 @@
 
   nav {
     background: #000;
-    padding: 15px;
+    padding: 12px 10px;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 15px;
-    font-size: 18px;
+    gap: 12px;
+    font-size: 16px;
     font-weight: bold;
     border-top: 2px solid #fff;
     border-bottom: 2px solid #fff;
@@ -66,7 +71,7 @@
   nav a {
     color: #fff;
     text-decoration: none;
-    padding: 8px 12px;
+    padding: 6px 10px;
     border-radius: 5px;
     transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
   }
@@ -77,12 +82,17 @@
   }
 
   section {
-    padding: 40px 20px;
+    padding: 30px 20px;
     max-width: 90%;
-    margin: 20px auto;
+    margin: 10px auto;
     border-bottom: 2px solid rgba(0,0,0,0.1);
     position: relative;
   }
+  /* Αφαίρεση της διαχωριστικής γραμμής του τελευταίου section πριν το footer */
+  section:last-of-type {
+    border-bottom: none;
+  }
+
   h2 {
     margin-bottom: 20px;
     font-weight: 800;
@@ -143,20 +153,22 @@
 
   footer {
     padding: 20px;
-    margin-top: 20px;
+    margin-top: 10px;
     font-size: 14px;
     color: #fff;
-    background: #000; /* μαύρο background */
+    background: #000;
+    box-shadow: inset 0 10px 15px -10px rgba(0,0,0,0.5);
   }
 
   @media (max-width: 600px) {
     nav {
-      flex-direction: column;
-      gap: 10px;
+      font-size: 14px;
+      gap: 8px;
+      padding: 10px 8px;
     }
     h2 { font-size: 22px; }
     p { font-size: 14px; }
-    .button-link { padding: 10px 20px; font-size: 14px; }
+    .button-link { padding: 10px 18px; font-size: 14px; }
     .social-links a { font-size: 18px; padding: 6px 8px; }
     header img { max-height: 80px; }
 
@@ -168,7 +180,12 @@
           rgba(0,0,0,0.1) 0,
           rgba(0,0,0,0.1) 1px,
           transparent 2px,
-          transparent 50px);
+          transparent 50px),
+        repeating-radial-gradient(circle at 50% 50%,
+          rgba(0,0,0,0.06) 0,
+          rgba(0,0,0,0.06) 1px,
+          transparent 2px,
+          transparent 100px);
       animation: moveBackgroundMobile 15s linear infinite;
       opacity: 0.25;
     }
