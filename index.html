@@ -4,25 +4,53 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Breadman the Project</title>
-  <!-- Font Awesome για εικονίδια -->
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #fff;
-      color: #222;
+      font-family: 'Poppins', sans-serif;
+      background: #ffffff;
+      color: #000;
       text-align: center;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Πιο έντονες background γραμμές */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 300%;
+      height: 300%;
+      background:
+        repeating-radial-gradient(circle at center,
+          rgba(0, 0, 0, 0.15) 0,
+          rgba(0, 0, 0, 0.15) 1.5px,
+          transparent 3px,
+          transparent 80px);
+      animation: moveBackground 30s linear infinite;
+      z-index: -1;
+      opacity: 0.3;
+    }
+
+    @keyframes moveBackground {
+      0% { transform: translate(0, 0); }
+      50% { transform: translate(-60px, -60px); }
+      100% { transform: translate(0, 0); }
     }
 
     /* Header */
     header {
-      background: #fff;
       padding: 20px;
-      border-bottom: 2px solid #000;
+      background: transparent;
     }
     header img {
-      max-height: 100px;
+      max-height: 120px;
     }
 
     /* Navigation */
@@ -34,26 +62,108 @@
       gap: 30px;
       font-size: 18px;
       font-weight: bold;
+      border-top: 2px solid #fff;
+      border-bottom: 2px solid #fff;
     }
     nav a {
       color: #fff;
       text-decoration: none;
-      transition: color 0.3s ease;
+      padding: 8px 12px;
+      border-radius: 5px;
+      transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
     }
     nav a:hover {
-      color: #f4f4f4;
-      text-decoration: underline;
+      color: #000;
+      background: #fff;
+      transform: scale(1.1);
     }
 
     /* Sections */
     section {
-      padding: 40px 20px;
-      max-width: 800px;
+      padding: 60px 20px;
+      max-width: 900px;
       margin: auto;
+      background: #000;
+      color: #fff;
+      border-radius: 10px;
+      margin-top: 40px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
     h2 {
       margin-bottom: 20px;
+      color: #fff;
+      font-weight: 800;
+      font-size: 28px;
+    }
+    p {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    /* Buttons */
+    .button-link {
+      display: inline-block;
+      padding: 12px 24px;
+      background: #fff;
       color: #000;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: bold;
+      margin: 10px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    }
+    .button-link:hover {
+      background: #000;
+      color: #fff;
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+
+    /* Email Link */
+    .email-link {
+      color: #fff;
+      font-weight: bold;
+      text-decoration: none;
+      transition: text-decoration 0.3s ease;
+    }
+    .email-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Social Links */
+    .social-links a {
+      margin: 0 15px;
+      color: #fff;
+      font-size: 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    }
+    .social-links a:hover {
+      color: #000;
+      background: #fff;
+      transform: scale(1.1);
+      text-decoration: none;
+    }
+
+    /* Contact Section (Compact) */
+    #contact {
+      padding: 30px 20px; /* Μικρότερο ύψος */
+      max-width: 700px;
+      background: #000;
+      color: #fff;
+      border-radius: 10px;
+      margin: 40px auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    #contact p {
+      margin: 10px 0;
+      font-size: 16px;
     }
 
     /* Footer */
@@ -62,52 +172,7 @@
       color: #fff;
       padding: 20px;
       margin-top: 40px;
-    }
-
-    /* Social Links */
-    .social-links a {
-      margin: 0 15px;
-      color: #000;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 20px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: color 0.3s ease;
-    }
-    .social-links a:hover {
-      color: #555;
-    }
-
-    /* Buttons with animation */
-    .button-link {
-      display: inline-block;
-      padding: 10px 20px;
-      background: #000;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 5px;
-      font-weight: bold;
-      margin: 10px;
-      transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .button-link:hover {
-      background: #444;
-      transform: scale(1.05);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    }
-
-    /* Email Link */
-    .email-link {
-      color: #000;
-      font-weight: bold;
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-    .email-link:hover {
-      color: #daa520; /* Χρυσό */
-      text-decoration: underline;
+      font-size: 14px;
     }
   </style>
 </head>
@@ -123,6 +188,7 @@
     <a href="#menu">Menu</a>
     <a href="#review">Write a Review</a>
     <a href="#social">Follow us</a>
+    <a href="#contact">Contact</a>
   </nav>
 
   <!-- Menu Section -->
@@ -139,23 +205,30 @@
     <h2>Write a Review</h2>
     <p>We would love to hear from you!</p>
     <a class="button-link" href="https://g.page/r/CQvg4gcO9xZ4EBM/review" target="_blank">⭐ Leave a Review</a>
-    <p>Email: <a class="email-link" href="mailto:breadman.dgi@gmail.com">breadman.dgi@gmail.com</a></p>
   </section>
 
   <!-- Social Media Section -->
   <section id="social">
     <h2>Follow us on Social Media</h2>
     <div class="social-links">
-      <a href="https://www.instagram.com/breadman.theproject?igsh=N3Q2cnhiMWthM2hz&utm_source=qr" target="_blank">
+      <a href="https://www.instagram.com/breadman.theproject" target="_blank">
         <i class="fab fa-instagram"></i> Instagram
       </a>
-      <a href="https://www.tiktok.com/@breadman.project?_t=ZN-8zFvgeg9D6M&_r=1" target="_blank">
+      <a href="https://www.tiktok.com/@breadman.project" target="_blank">
         <i class="fab fa-tiktok"></i> TikTok
       </a>
-      <a href="https://www.facebook.com/share/1CgeZV9184/?mibextid=wwXIfr" target="_blank">
+      <a href="https://www.facebook.com/share/1CgeZV9184" target="_blank">
         <i class="fab fa-facebook"></i> Facebook
       </a>
     </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <p><strong>Address:</strong> Formionos 12, Athina 116 34</p>
+    <p><strong>Phone:</strong> 21 0723 4473</p>
+    <p><strong>Email:</strong> <a class="email-link" href="mailto:breadman.dgi@gmail.com">breadman.dgi@gmail.com</a></p>
   </section>
 
   <!-- Footer -->
