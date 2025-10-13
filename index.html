@@ -1,43 +1,65 @@
-<!DOCTYPE html>
-<html lang="el">
+<!DOCTYPE html> 
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Breadman the Project</title>
+  <title>Breadman — The Project</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     body {
       margin: 0;
       font-family: 'Noto Sans', sans-serif;
       background: #fff;
       color: #000;
-      text-align: center;
-      position: relative;
       overflow-x: hidden;
     }
 
+    /* Header and Nav */
     header {
-      padding: 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 0;
+      z-index: 50;
       background: transparent;
+      transition: background 0.5s ease, padding 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .header-inner {
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 40px;
+      box-sizing: border-box;
+    }
+
+    header.scrolled {
+      background: #fff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 12px 0;
     }
 
     header img {
-      max-height: 120px;
+      max-height: 80px;
       width: auto;
+      filter: brightness(0) invert(1);
+      transition: filter 0.4s ease;
+    }
+
+    header.scrolled img {
+      filter: none;
     }
 
     nav {
-      background: #000;
-      padding: 12px 10px;
       display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 12px;
-      font-size: 16px;
+      gap: 25px;
       font-weight: bold;
-      border-top: 2px solid #fff;
-      border-bottom: 2px solid #fff;
     }
 
     nav a {
@@ -48,178 +70,445 @@
       transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
     }
 
+    header.scrolled nav a {
+      color: #000;
+    }
+
     nav a:hover {
-      color: #000;
-      background: #fff;
-      transform: scale(1.1);
-    }
-
-    .with-background {
-  background: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url('jpeg.jpg') no-repeat center center;
-  background-size: cover;
-  background-attachment: fixed;
-  margin-top: 0; /* η εικόνα ξεκινάει ακριβώς κάτω από το menu */
-  animation: slideUp 2s ease-out forwards;
-}
-
-    @keyframes slideUp {
-      from {
-        transform: translateY(50px); /* Ξεκινάει πιο χαμηλά */
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0); /* Τερματική θέση */
-        opacity: 1;
-      }
-    }
-
-    section {
-      padding: 30px 20px;
-      max-width: 90%;
-      margin: 10px auto;
-      border-bottom: 2px solid rgba(0,0,0,0.1);
-      position: relative;
-    }
-
-    section:last-of-type {
-      border-bottom: none;
-    }
-
-    h2 {
-      margin-bottom: 20px;
-      font-weight: 800;
-      font-size: 26px;
-    }
-
-    p {
-      font-size: 16px;
-      margin-bottom: 20px;
-    }
-
-    .button-link {
-      display: inline-block;
-      padding: 12px 24px;
       background: #000;
       color: #fff;
-      text-decoration: none;
-      border-radius: 50px;
-      font-weight: bold;
-      margin: 10px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-    }
-
-    .button-link:hover {
-      background: #fff;
-      color: #000;
       transform: scale(1.05);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
 
-    .email-link {
+    header.scrolled nav a:hover {
+      background: #000;
+      color: #fff;
+    }
+
+    /* Hamburger (mobile) */
+    .menu-toggle {
+      display: none;
+      cursor: pointer;
+      font-size: 28px;
+      color: #fff;
+      user-select: none;
+      transition: color 0.4s ease;
+    }
+
+    header.scrolled .menu-toggle {
       color: #000;
-      font-weight: bold;
-      text-decoration: none;
-      transition: text-decoration 0.3s ease;
     }
 
-    .email-link:hover {
-      text-decoration: underline;
-    }
-
-    .social-links a {
-      margin: 5px 10px;
-      color: #000;
-      font-size: 20px;
-      display: inline-flex;
-      align-items: center;
+    /* Mobile Slide-in Menu */
+    .mobile-nav {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 70%;
+      height: 100%;
+      background: #000;
+      display: flex;
+      flex-direction: column;
       justify-content: center;
-      gap: 6px;
-      padding: 6px 10px;
-      border-radius: 5px;
-      text-decoration: none;
-      transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+      align-items: center;
+      transition: right 0.4s ease;
+      z-index: 45;
     }
 
-    .social-links a:hover {
+    .mobile-nav.open {
+      right: 0;
+    }
+
+    .mobile-nav a {
+      display: block;
       color: #fff;
-      background: #000;
-      transform: scale(1.1);
       text-decoration: none;
+      padding: 15px 0;
+      font-weight: bold;
+      font-size: 20px;
+      width: 100%;
+      text-align: center;
+      transition: background 0.3s ease, color 0.3s ease;
     }
 
+    .mobile-nav a:hover {
+      background: #fff;
+      color: #000;
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 80vh;
+      background: url('IMG_2143.jpeg') center/cover no-repeat;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    /* Intro */
+    .intro {
+      max-width: 800px;
+      margin: 60px auto 100px auto;
+      padding: 0 20px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 1s ease;
+    }
+
+    .intro.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .intro h2 {
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 25px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .intro p {
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .photo {
+      width: 100%;
+      height: 500px;
+      background: url('IMG_20240428_190750_538_Original.jpeg') center/cover no-repeat;
+      border-radius: 10px;
+      margin-top: 50px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 1s ease;
+    }
+
+    .photo.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Gallery */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      max-width: 1000px;
+      margin: 80px auto;
+      padding: 0 20px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 1s ease;
+    }
+
+    .gallery.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .gallery img {
+      width: 100%;
+      height: 100%; /* keep original height */
+      object-fit: cover;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.03);
+      opacity: 0.9;
+    }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .lightbox.active {
+      display: flex;
+    }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 10px;
+    }
+
+    .lightbox::after {
+      content: '✕';
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: #fff;
+      font-size: 32px;
+      cursor: pointer;
+    }
+
+    /* Contact Info Section */
+    .contact-info {
+      background: #f9f9f9;
+      padding: 50px 0;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .contact-inner {
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 20px;
+      gap: 40px;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .contact-details {
+      flex: 1 1 300px;
+    }
+
+    .contact-details h3 {
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+
+    .contact-details p {
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 8px;
+    }
+
+    .contact-map {
+      flex: 1 1 300px;
+      min-width: 300px;
+      overflow: hidden;
+      border-radius: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .contact-map iframe {
+      width: 100%;
+      height: 200px;
+      border: none;
+      transition: transform 0.3s ease;
+    }
+
+    .contact-map:hover iframe {
+      transform: scale(1.05);
+    }
+
+    /* Footer */
     footer {
-      padding: 20px;
-      margin-top: 10px;
-      font-size: 14px;
-      color: #fff;
+      text-align: center;
       background: #000;
-      box-shadow: inset 0 10px 15px -10px rgba(0,0,0,0.5);
+      color: #fff;
+      padding: 30px 0;
+      line-height: 1.8;
+      font-size: 15px;
+      width: 100%;
     }
 
-    @media (max-width: 600px) {
-      nav {
-        font-size: 14px;
-        gap: 8px;
-        padding: 10px 8px;
-      }
+    footer p {
+      margin: 5px 0;
+    }
 
-      h2 { font-size: 22px; }
-      p { font-size: 14px; }
-      .button-link { padding: 10px 18px; font-size: 14px; }
-      .social-links a { font-size: 18px; padding: 6px 8px; }
-      header img { max-height: 80px; }
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header-inner {
+        padding: 0 25px;
+      }
+      nav {
+        display: none;
+      }
+      .menu-toggle {
+        display: block;
+      }
+      .hero {
+        height: 60vh;
+      }
+      .intro h2 {
+        font-size: 26px;
+      }
+      .intro p {
+        font-size: 16px;
+      }
+      .photo {
+        height: 300px;
+      }
+      .gallery {
+        gap: 10px;
+        margin: 50px auto;
+        grid-template-columns: 1fr; /* <-- stack images vertically */
+      }
+      .contact-info {
+        padding: 50px 20px;
+      }
+      footer {
+        font-size: 14px;
+        padding: 25px 15px;
+      }
+      .contact-inner {
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+      }
+      .contact-details h3 {
+        margin-bottom: 5px;
+      }
+      .contact-details p {
+        margin-bottom: 2px;
+      }
+      .contact-map iframe {
+        height: 180px;
+      }
     }
   </style>
 </head>
 <body>
 
-<header>
-  <img src="logo.png" alt="Breadman the Project Logo">
+<!-- Header -->
+<header id="header">
+  <div class="header-inner">
+    <img src="logo.png" alt="Breadman Logo">
+    <nav>
+      <a href="menu.html">Menu</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="menu-toggle" id="menu-toggle">☰</div>
+  </div>
 </header>
 
-<nav>
-  <a href="#menu">Menu</a>
-  <a href="#review">Write a Review</a>
-  <a href="#social">Follow us</a>
-  <a href="#contact">Contact</a>
-</nav>
-
-<!-- Εδώ ξεκινάει το background -->
-<div class="with-background">
-  <section id="menu">
-    <h2>Menu</h2>
-    <div>
-      <a class="button-link" href="menu-en.pdf" target="_blank">📄 Menu (English)</a>
-      <a class="button-link" href="menu-el.pdf" target="_blank">📄 Μενού (Ελληνικά)</a>
-    </div>
-  </section>
-
-  <section id="review">
-    <h2>Write a Review</h2>
-    <p>We would love to hear from you!</p>
-    <a class="button-link" href="https://g.page/r/CQvg4gcO9xZ4EBM/review" target="_blank">⭐ Leave a Review</a>
-  </section>
-
-  <section id="social">
-    <h2>Follow us on Social Media</h2>
-    <div class="social-links">
-      <a href="https://www.instagram.com/breadman.theproject" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-      <a href="https://www.tiktok.com/@breadman.project" target="_blank"><i class="fab fa-tiktok"></i> TikTok</a>
-      <a href="https://www.facebook.com/share/1CgeZV9184" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
-    </div>
-  </section>
-
-  <section id="contact">
-    <h2>Contact Us</h2>
-    <p><strong>Address:</strong> Formionos 12, Athina 116 34</p>
-    <p><strong>Phone:</strong> 21 0723 4473</p>
-    <p><strong>Email:</strong> <a class="email-link" href="mailto:breadman.dgi@gmail.com">breadman.dgi@gmail.com</a></p>
-  </section>
+<!-- Mobile Slide-in Menu -->
+<div class="mobile-nav" id="mobile-nav">
+  <a href="menu.html">Menu</a>
+  <a href="contact.html">Contact</a>
 </div>
 
+<!-- Hero -->
+<div class="hero"></div>
+
+<!-- Intro -->
+<section class="intro">
+  <h2>Breadman Microbakery</h2>
+  <p>
+    Breadman is a creative project — a modern bakery where the star is slow-fermented sourdough bread in all its contemporary forms.
+    Our breads and handmade doughs take center stage in a distinctive brunch and all-day menu that blends the art of baking with modern gastronomy.
+    Each dish is complemented by specialty coffee, selected Greek wines, and refreshing cocktails. Whatever you choose to try at Breadman, every dough and preparation is 100% handmade and crafted in our own kitchen and workshop.
+  </p>
+</section>
+
+<!-- Gallery Section -->
+<section class="gallery">
+  <img src="photo12.jpg" alt="Gallery image 1">
+  <img src="photo11.jpeg" alt="Gallery image 2">
+  <img src="photo10.jpeg" alt="Gallery image 3">
+  <img src="photo9.jpeg" alt="Gallery image 4">
+  <img src="photo8.jpeg" alt="Gallery image 5">
+  <img src="photo7.jpeg" alt="Gallery image 6">
+  <img src="photo6.jpeg" alt="Gallery image 7">
+  <img src="photo5.jpeg" alt="Gallery image 8">
+  <img src="photo4.jpeg" alt="Gallery image 9">
+  <img src="photo3.jpeg" alt="Gallery image 10">
+  <img src="photo2.jpeg" alt="Gallery image 11">
+  <img src="photo1.jpg" alt="Gallery image 12">
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <img src="" alt="Expanded image">
+</div>
+
+<!-- Contact Info Section -->
+<section class="contact-info">
+  <div class="contact-inner">
+    <div class="contact-details">
+      <h3>Visit Us</h3>
+      <p><strong>Address:</strong> Formionos 12, Athina 116 34</p>
+      <p><strong>Hours:</strong> 07:30–17:00</p>
+    </div>
+    <div class="contact-map">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.123456789!2d23.7281234!3d37.9781234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14a1bd123456789%3A0xabcdef123456789!2sFormionos%2012%2C%20Athina!5e0!3m2!1sen!2sgr!4v1697086200000!5m2!1sen!2sgr"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
 <footer>
   <p>© 2025 Breadman the Project. All rights reserved.</p>
 </footer>
+
+<script>
+  // Fade-in animation
+  const fadeEls = document.querySelectorAll('.intro, .photo, .gallery');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.2 });
+  fadeEls.forEach(el => observer.observe(el));
+
+  // Header scroll transition
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > window.innerHeight * 0.6) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  });
+
+  // Mobile menu toggle
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileNav = document.getElementById('mobile-nav');
+  let menuOpen = false;
+  menuToggle.addEventListener('click', () => {
+    menuOpen = !menuOpen;
+    mobileNav.classList.toggle('open', menuOpen);
+    menuToggle.textContent = menuOpen ? '✕' : '☰';
+  });
+
+  // Lightbox functionality
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = lightbox.querySelector('img');
+  document.querySelectorAll('.gallery img').forEach(img => {
+    img.addEventListener('click', () => {
+      lightbox.classList.add('active');
+      lightboxImg.src = img.src;
+    });
+  });
+  lightbox.addEventListener('click', () => {
+    lightbox.classList.remove('active');
+  });
+</script>
 
 </body>
 </html>
