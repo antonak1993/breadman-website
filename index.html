@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>  
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -200,7 +200,7 @@
       transform: translateY(0);
     }
 
-    /* Gallery */
+    /* ✅ Uniform Gallery */
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -220,8 +220,8 @@
 
     .gallery img {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
+      aspect-ratio: 1 / 1; /* ✅ Makes all photos square */
+      object-fit: cover; /* ✅ Crops to fit cleanly */
       border-radius: 10px;
       cursor: pointer;
       transition: transform 0.3s ease, opacity 0.3s ease;
@@ -230,6 +230,21 @@
     .gallery img:hover {
       transform: scale(1.03);
       opacity: 0.9;
+    }
+
+    @media (max-width: 768px) {
+      .gallery {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin: 50px auto;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .gallery {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
     }
 
     /* Lightbox */
@@ -336,7 +351,7 @@
       margin: 5px 0;
     }
 
-    /* Responsive */
+    /* Responsive general tweaks */
     @media (max-width: 768px) {
       .header-inner {
         padding: 0 25px;
@@ -359,16 +374,12 @@
       .photo {
         height: 300px;
       }
-      .gallery {
-        gap: 10px;
-        margin: 50px auto;
-      }
       .contact-info {
-        padding: 50px 20px; /* restore side padding on mobile */
+        padding: 50px 20px;
       }
       footer {
         font-size: 14px;
-        padding: 25px 15px; /* restore side padding on mobile */
+        padding: 25px 15px;
       }
       .contact-inner {
         flex-direction: column;
@@ -386,15 +397,6 @@
       }
     }
   </style>
-
-<!-- Performance Improvements -->
-<link rel="preload" href="logo.png" as="image">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;800&display=swap');
-</style>
-
 </head>
 <body>
 
