@@ -184,23 +184,7 @@
       line-height: 1.6;
     }
 
-    .photo {
-      width: 100%;
-      height: 500px;
-      background: url('IMG_20240428_190750_538_Original.jpeg') center/cover no-repeat;
-      border-radius: 10px;
-      margin-top: 50px;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 1s ease;
-    }
-
-    .photo.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ✅ Uniform Gallery */
+    /* ✅ Responsive Gallery */
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -220,10 +204,11 @@
 
     .gallery img {
       width: 100%;
-      aspect-ratio: 1 / 1; /* ✅ Makes all photos square */
-      object-fit: cover; /* ✅ Crops to fit cleanly */
+      height: auto;
+      object-fit: cover;
       border-radius: 10px;
       cursor: pointer;
+      display: block;
       transition: transform 0.3s ease, opacity 0.3s ease;
     }
 
@@ -232,18 +217,68 @@
       opacity: 0.9;
     }
 
+    /* Tablet & Mobile */
     @media (max-width: 768px) {
       .gallery {
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-        margin: 50px auto;
+        grid-template-columns: 1fr;
+        gap: 15px;
+        margin: 50px 10px;
+        opacity: 1 !important;         /* Always visible */
+        transform: none !important;    /* Disable fade-in translate */
+      }
+
+      .gallery img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+
+      .header-inner {
+        padding: 0 25px;
+      }
+      nav {
+        display: none;
+      }
+      .menu-toggle {
+        display: block;
+      }
+      .hero {
+        height: 60vh;
+      }
+      .intro h2 {
+        font-size: 26px;
+      }
+      .intro p {
+        font-size: 16px;
+      }
+      .contact-info {
+        padding: 50px 20px;
+      }
+      footer {
+        font-size: 14px;
+        padding: 25px 15px;
+      }
+      .contact-inner {
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
       }
     }
 
     @media (max-width: 480px) {
       .gallery {
         grid-template-columns: 1fr;
-        gap: 8px;
+        gap: 10px;
+        margin: 40px 5px;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      .gallery img {
+        width: 100%;
+        height: auto;
+        border-radius: 6px;
       }
     }
 
@@ -351,51 +386,6 @@
       margin: 5px 0;
     }
 
-    /* Responsive general tweaks */
-    @media (max-width: 768px) {
-      .header-inner {
-        padding: 0 25px;
-      }
-      nav {
-        display: none;
-      }
-      .menu-toggle {
-        display: block;
-      }
-      .hero {
-        height: 60vh;
-      }
-      .intro h2 {
-        font-size: 26px;
-      }
-      .intro p {
-        font-size: 16px;
-      }
-      .photo {
-        height: 300px;
-      }
-      .contact-info {
-        padding: 50px 20px;
-      }
-      footer {
-        font-size: 14px;
-        padding: 25px 15px;
-      }
-      .contact-inner {
-        flex-direction: column;
-        align-items: center;
-        gap: 5px;
-      }
-      .contact-details h3 {
-        margin-bottom: 5px;
-      }
-      .contact-details p {
-        margin-bottom: 2px;
-      }
-      .contact-map iframe {
-        height: 180px;
-      }
-    }
   </style>
 </head>
 <body>
@@ -477,14 +467,20 @@
 </footer>
 
 <script>
-  // Fade-in animation
-  const fadeEls = document.querySelectorAll('.intro, .photo, .gallery');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add('visible');
-    });
-  }, { threshold: 0.2 });
-  fadeEls.forEach(el => observer.observe(el));
+  // Fade-in animation for desktop only
+  if (window.innerWidth > 768) {
+    const fadeEls = document.querySelectorAll('.intro, .gallery');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.2 });
+    fadeEls.forEach(el => observer.observe(el));
+  } else {
+    // Make gallery and intro visible immediately on mobile
+    document.querySelector('.intro').classList.add('visible');
+    document.querySelector('.gallery').classList.add('visible');
+  }
 
   // Header scroll transition
   const header = document.getElementById('header');
@@ -522,5 +518,3 @@
 
 </body>
 </html>
-
-
