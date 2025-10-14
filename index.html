@@ -184,7 +184,7 @@
       line-height: 1.6;
     }
 
-    /* ✅ Responsive Gallery */
+    /* ✅ Uniform, Always Visible Gallery */
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -204,7 +204,7 @@
 
     .gallery img {
       width: 100%;
-      height: auto;
+      aspect-ratio: 1 / 1;
       object-fit: cover;
       border-radius: 10px;
       cursor: pointer;
@@ -223,13 +223,13 @@
         grid-template-columns: 1fr;
         gap: 15px;
         margin: 50px 10px;
-        opacity: 1 !important;         /* Always visible */
-        transform: none !important;    /* Disable fade-in translate */
+        opacity: 1 !important;
+        transform: none !important;
       }
 
       .gallery img {
         width: 100%;
-        height: auto;
+        aspect-ratio: 1 / 1;
         object-fit: cover;
         border-radius: 8px;
       }
@@ -277,7 +277,8 @@
 
       .gallery img {
         width: 100%;
-        height: auto;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
         border-radius: 6px;
       }
     }
@@ -385,7 +386,6 @@
     footer p {
       margin: 5px 0;
     }
-
   </style>
 </head>
 <body>
@@ -467,20 +467,14 @@
 </footer>
 
 <script>
-  // Fade-in animation for desktop only
-  if (window.innerWidth > 768) {
-    const fadeEls = document.querySelectorAll('.intro, .gallery');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
-      });
-    }, { threshold: 0.2 });
-    fadeEls.forEach(el => observer.observe(el));
-  } else {
-    // Make gallery and intro visible immediately on mobile
-    document.querySelector('.intro').classList.add('visible');
-    document.querySelector('.gallery').classList.add('visible');
-  }
+  // Fade-in animation for desktop
+  const fadeEls = document.querySelectorAll('.intro, .gallery');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.2 });
+  fadeEls.forEach(el => observer.observe(el));
 
   // Header scroll transition
   const header = document.getElementById('header');
